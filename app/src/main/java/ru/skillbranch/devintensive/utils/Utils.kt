@@ -37,7 +37,17 @@ object Utils {
         Utils.toInitials(null, null) //null
         Utils.toInitials(" ", "") //null
 */
-        //TODO("not implemented")
-        return ""
+        val fName = firstName?.trim()
+        val lName = lastName?.trim()
+        val firstInit: Char? = fName?.let{if (fName.isNotEmpty()) fName[0] else null}
+        val lastInit: Char? = lName?.let{if (lName.isNotEmpty()) lName[0] else null}
+        val initials: String?
+        if (firstInit == null && lastInit == null) {
+            initials = null
+        } else {
+            initials = "${if (firstInit == null) "" else firstInit}${if (lastInit == null) "" else lastInit}".toUpperCase()
+        }
+
+        return initials
     }
 }

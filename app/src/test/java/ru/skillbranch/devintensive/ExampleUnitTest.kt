@@ -8,6 +8,7 @@ import ru.skillbranch.devintensive.extensions.add
 import ru.skillbranch.devintensive.extensions.format
 import ru.skillbranch.devintensive.extensions.toUserView
 import ru.skillbranch.devintensive.models.*
+import ru.skillbranch.devintensive.utils.Utils.toInitials
 import java.util.*
 
 /**
@@ -90,4 +91,10 @@ class ExampleUnitTest {
         println(imgMessage.formatMessage())
 
    }
+
+    @Test
+    fun test_toInitials() {
+        val initials = toInitials(" asd ", null)
+        println("Initials: \"$initials\"")
+    }
 }
