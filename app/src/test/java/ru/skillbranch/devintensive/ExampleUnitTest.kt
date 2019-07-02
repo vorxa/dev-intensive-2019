@@ -97,4 +97,18 @@ class ExampleUnitTest {
         val initials = toInitials(" asd ", null)
         println("Initials: \"$initials\"")
     }
+
+    @Test
+    fun test_builder() {
+        val user0 = User.Builder().id("2")
+            .firstName("John")
+            .lastName("Jhonson")
+            .avatar("Avatar")
+            .rating(5)
+            .respect(3)
+            .lastVisit(Date())
+            .isOnline(false)
+            .build()
+        println(user0)
+    }
 }
