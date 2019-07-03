@@ -9,6 +9,7 @@ import ru.skillbranch.devintensive.extensions.format
 import ru.skillbranch.devintensive.extensions.toUserView
 import ru.skillbranch.devintensive.models.*
 import ru.skillbranch.devintensive.utils.Utils.toInitials
+import ru.skillbranch.devintensive.utils.Utils.transliteration
 import java.util.*
 
 /**
@@ -111,4 +112,13 @@ class ExampleUnitTest {
             .build()
         println(user0)
     }
+
+    @Test
+    fun test_transliteration() {
+        val user=User.makeUser("Сайлыкмаа Эйли-Хем чуртуг БиЧе оолъ")
+        println("${user.firstName} <> ${user.lastName}")
+        println(transliteration("${user.firstName} ${user.lastName}", "_"))
+
+    }
+
 }
