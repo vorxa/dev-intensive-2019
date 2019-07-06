@@ -50,57 +50,77 @@ fun Date.humanizeDiff(date: Date = Date()): String {
    *26ч - 360д "N дней назад"
     >360д "более года назад"
 */
-    //TODO("not implemented")
+    fun ending (amount: Int, unit: TimeUnits) : String {
+        var decs: Int = 0
+        var endings = emptyList<String>()
+        var humanize: String = ""
+        decs = if (amount < 100) amount else "$amount".substring("$amount".length-2,"$amount".length).toInt()
+        when (unit) {
+            TimeUnits.MINUTE -> {endings = listOf("минуту", "минут", "минуты")}
+            TimeUnits.HOUR -> {endings = listOf("час", "часов", "часа")}
+            TimeUnits.DAY -> {endings = listOf("день", "дней", "дня")}
+        }
+
+        when {
+            decs == 1 || (decs % 10) == 1 -> humanize = endings.get(0)
+            decs in 5..19 || (decs % 10)  in 5..9 || (decs % 10) == 0 -> humanize = endings.get(1)
+            (decs % 10)  in 2..4 -> humanize = endings.get(2)
+        }
+
+        return humanize
+    }
     val diff = abs((this.time - date.time) / 1000)
-    val inFuture = if (((this.time - date.time) / 1000) < 0) true else false
+    val inFuture = if (((this.time - date.time) / 1000) > 0) true else false
     var humanize: String = ""
     var amount = 0
 
-
-    if (diff > 360*24*3600) return "более года назад"
-    when {
-        diff in 0L..1L -> return "только что"
-        diff in 2L..45L -> return "несколько секунд назад"
-        diff in 46L..75L -> return "минуту назад"
-        diff in 45*60+1..75*60 -> return "час назад"
-        diff in 22*3600+1..26*3600 -> return "день назад"
+    if (inFuture) {
+        if (diff > 360*24*3600) return "более чем через год"
+        when {
+            diff in 0L..1L -> return "только что"
+            diff in 2L..45L -> return "через несколько секунд"
+            diff in 46L..75L -> return "через минуту"
+            diff in 45*60+1..75*60 -> return "через час"
+            diff in 22*3600+1..26*3600 -> return "через день"
+        }
+    } else {
+        if (diff > 360 * 24 * 3600) return "более года назад"
+        when {
+            diff in 0L..1L -> return "только что"
+            diff in 2L..45L -> return "несколько секунд назад"
+            diff in 46L..75L -> return "минуту назад"
+            diff in 45 * 60 + 1..75 * 60 -> return "час назад"
+            diff in 22 * 3600 + 1..26 * 3600 -> return "день назад"
+        }
     }
-
     var decs: Int = 0
     when {
         // 76..45*60 "N минут назад"
         diff in 76..45*60 -> {
             amount = (diff / 60).toInt()
-            decs = if (diff / 60 < 100) (diff / 60).toInt() else "$diff".substring("$diff".length-2,"$diff".length).toInt()
+            humanize = ending(amount, TimeUnits.MINUTE)
+/*
+            decs = if (amount < 100) amount else "$diff".substring("$amount".length-2,"$amount".length).toInt()
             when {
                 decs == 1 || (decs % 10) == 1 -> humanize = "минуту"
                 decs in 5..19 || (decs % 10)  in 5..9 || (decs % 10) == 0 -> humanize = "минут"
                 (decs % 10)  in 2..4 -> humanize = "минуты"
             }
+*/
         }
         // 75*60+1..22*3600 "N часов назад"
         diff in 75*60+1..22*3600 -> {
             amount = (diff / 3600).toInt()
-            decs = if (diff / 3600 < 100) (diff / 3600).toInt() else "$diff".substring("$diff".length-2,"$diff".length).toInt()
-            when {
-                decs == 1 || (decs % 10) == 1 -> humanize = "час"
-                decs in 5..19 || (decs % 10)  in 5..9 || (decs % 10) == 0 -> humanize = "часов"
-                (decs % 10)  in 2..4 -> humanize = "часа"
-            }
+            humanize = ending(amount, TimeUnits.HOUR)
         }
         // 26*3600+1..360*24*3600 "N дней назад"
         diff in 26*3600+1..360*24*3600 -> {
             amount = (diff / (3600 * 24)).toInt()
-            decs = if (diff / (3600 * 24) < 100) (diff / (3600 * 24)).toInt() else "$amount".substring("$amount".length-2,"$amount".length).toInt()
-            when {
-                decs == 1 || (decs % 10) == 1 -> humanize = "день"
-                decs in 5..19 || (decs % 10)  in 5..9 || (decs % 10) == 0 -> humanize = "дней"
-                (decs % 10)  in 2..4 -> humanize = "дня"
-            }
+            humanize = ending(amount, TimeUnits.DAY)
         }
     }
 
-    return "$amount $humanize назад"
+    return if (inFuture) "через $amount $humanize" else "$amount $humanize назад"
 }
 
 enum class TimeUnits {

@@ -91,8 +91,9 @@ class ExampleUnitTest {
    }
 
     @Test
+    // module3 FAILED java.lang.AssertionError: expected:<(null, null)> but was:<(null, )
     fun test_toInitials() {
-        val initials = toInitials(" asd ", null)
+        val initials = toInitials(null, null)
         println("Initials: \"$initials\"")
     }
 
@@ -176,8 +177,8 @@ class ExampleUnitTest {
         assertEquals("более года назад", Date().add(-361, TimeUnits.DAY).humanizeDiff())
 
 // ----- Future ------
-/*
-        assertEquals("через несколько секунд", Date().add(1, TimeUnits.SECOND).humanizeDiff())
+
+        assertEquals("только что", Date().add(1, TimeUnits.SECOND).humanizeDiff())
         assertEquals("через минуту", Date().add(1, TimeUnits.MINUTE).humanizeDiff())
         assertEquals("через 2 минуты", Date().add(2, TimeUnits.MINUTE).humanizeDiff())
         assertEquals("через 3 минуты", Date().add(3, TimeUnits.MINUTE).humanizeDiff())
@@ -192,6 +193,6 @@ class ExampleUnitTest {
         assertEquals("через 5 дней", Date().add(5, TimeUnits.DAY).humanizeDiff())
         assertEquals("через 148 дней", Date().add(148, TimeUnits.DAY).humanizeDiff())
         assertEquals("более чем через год", Date().add(400, TimeUnits.DAY).humanizeDiff())
-*/
+
     }
     }
