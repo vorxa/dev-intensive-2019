@@ -51,41 +51,56 @@ fun Date.humanizeDiff(date: Date = Date()): String {
     >360д "более года назад"
 */
     //TODO("not implemented")
-    val diff = (this.time - date.time) / 1000
-    var humanize: String
-    var mins: Int
+    val diff = abs((this.time - date.time) / 1000)
+    val inFuture = if (((this.time - date.time) / 1000) < 0) true else false
+    var humanize: String = ""
+    var amount = 0
 
-    println(diff)
-    humanize = when (diff) {
-        0L,-1L -> "только что"
-        in -45L..-2L -> "несколько секунд назад"
-        in -75L..-46L -> "минуту назад"
-        in -75*60 until -45*60 -> "час назад"
-        in -26*3600 until -22*3600 -> "день назад"
-        else -> ""
+
+    if (diff > 360*24*3600) return "более года назад"
+    when {
+        diff in 0L..1L -> return "только что"
+        diff in 2L..45L -> return "несколько секунд назад"
+        diff in 46L..75L -> return "минуту назад"
+        diff in 45*60+1..75*60 -> return "час назад"
+        diff in 22*3600+1..26*3600 -> return "день назад"
     }
-    humanize = if (diff < -360*24*3600) "более года назад" else humanize
 
-
-
-    if (diff >=-45*60 && diff < -75L) { // минуты
-        mins = if (abs(diff / 60) < 100) abs(diff / 60).toInt() else "$diff".substring("$diff".length-2,"$diff".length).toInt()
-
-        val str_mins = "$mins"
-        val ending: String
-        if (mins <= 10) {
-            ending = when(mins) {
-                1L -> "а"
-                2L,3L,4L -> "ы"
-                else -> ""
+    var decs: Int = 0
+    when {
+        // 76..45*60 "N минут назад"
+        diff in 76..45*60 -> {
+            amount = (diff / 60).toInt()
+            decs = if (diff / 60 < 100) (diff / 60).toInt() else "$diff".substring("$diff".length-2,"$diff".length).toInt()
+            when {
+                decs == 1 || (decs % 10) == 1 -> humanize = "минуту"
+                decs in 5..19 || (decs % 10)  in 5..9 || (decs % 10) == 0 -> humanize = "минут"
+                (decs % 10)  in 2..4 -> humanize = "минуты"
             }
-        } else {
-            val dec = str_mins[str_mins.length-2].toInt()
-
+        }
+        // 75*60+1..22*3600 "N часов назад"
+        diff in 75*60+1..22*3600 -> {
+            amount = (diff / 3600).toInt()
+            decs = if (diff / 3600 < 100) (diff / 3600).toInt() else "$diff".substring("$diff".length-2,"$diff".length).toInt()
+            when {
+                decs == 1 || (decs % 10) == 1 -> humanize = "час"
+                decs in 5..19 || (decs % 10)  in 5..9 || (decs % 10) == 0 -> humanize = "часов"
+                (decs % 10)  in 2..4 -> humanize = "часа"
+            }
+        }
+        // 26*3600+1..360*24*3600 "N дней назад"
+        diff in 26*3600+1..360*24*3600 -> {
+            amount = (diff / (3600 * 24)).toInt()
+            decs = if (diff / (3600 * 24) < 100) (diff / (3600 * 24)).toInt() else "$amount".substring("$amount".length-2,"$amount".length).toInt()
+            when {
+                decs == 1 || (decs % 10) == 1 -> humanize = "день"
+                decs in 5..19 || (decs % 10)  in 5..9 || (decs % 10) == 0 -> humanize = "дней"
+                (decs % 10)  in 2..4 -> humanize = "дня"
+            }
         }
     }
 
-    return "$mins"
+    return "$amount $humanize назад"
 }
 
 enum class TimeUnits {

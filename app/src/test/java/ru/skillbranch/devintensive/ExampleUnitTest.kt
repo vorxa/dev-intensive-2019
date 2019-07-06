@@ -122,6 +122,33 @@ class ExampleUnitTest {
     fun test_humanizeDiff() {
 
         println(Date().add(-2, TimeUnits.HOUR).humanizeDiff())
+        println("только что: ${Date().add(-1, TimeUnits.SECOND).humanizeDiff()}")
+        println("несколько секунд назад: ${Date().add(-45, TimeUnits.SECOND).humanizeDiff()}")
+        println("минуту назад: ${Date().add(-46, TimeUnits.SECOND).humanizeDiff()}")
+        println("1 минуту назад: ${Date().add(-76, TimeUnits.SECOND).humanizeDiff()}")
+        println("минуту назад: ${Date().add(-1, TimeUnits.MINUTE).humanizeDiff()}")
+        println("2 минуты назад: ${Date().add(-2, TimeUnits.MINUTE).humanizeDiff()}")
+        println("3 минуты назад: ${Date().add(-3, TimeUnits.MINUTE).humanizeDiff()}")
+        println("17 минут назад: ${Date().add(-17, TimeUnits.MINUTE).humanizeDiff()}")
+        println("30 минут назад: ${Date().add(-30, TimeUnits.MINUTE).humanizeDiff()}")
+        println("45 минут назад: ${Date().add(-45, TimeUnits.MINUTE).humanizeDiff()}")
+        println("час назад: ${Date().add(-1, TimeUnits.HOUR).humanizeDiff()}")
+        println("1 час назад: ${Date().add(-76, TimeUnits.MINUTE).humanizeDiff()}")
+        println("2 часа назад: ${Date().add(-120, TimeUnits.MINUTE).humanizeDiff()}")
+        println("3 часа назад: ${Date().add(-3, TimeUnits.HOUR).humanizeDiff()}")
+        println("4 часа назад: ${Date().add(-4, TimeUnits.HOUR).humanizeDiff()}")
+        println("5 часов назад: ${Date().add(-5, TimeUnits.HOUR).humanizeDiff()}")
+        println("17 часов назад: ${Date().add(-17, TimeUnits.HOUR).humanizeDiff()}")
+        println("1 день назад: ${Date().add(-27, TimeUnits.HOUR).humanizeDiff()}")
+        println("4 дня назад: ${Date().add(-4, TimeUnits.DAY).humanizeDiff()}")
+        println("5 дней назад: ${Date().add(-5, TimeUnits.DAY).humanizeDiff()}")
+        println("20 день назад: ${Date().add(-20, TimeUnits.DAY).humanizeDiff()}")
+        println("21 день назад: ${Date().add(-21, TimeUnits.DAY).humanizeDiff()}")
+        println("99 день назад: ${Date().add(-99, TimeUnits.DAY).humanizeDiff()}")
+        println("101 день назад: ${Date().add(-101, TimeUnits.DAY).humanizeDiff()}")
+        println("273 дня назад: ${Date().add(-273, TimeUnits.DAY).humanizeDiff()}")
+        println("360 дней назад: ${Date().add(-360, TimeUnits.DAY).humanizeDiff()}")
+        println("более года назад: ${Date().add(-361, TimeUnits.DAY).humanizeDiff()}")
 
     }
 
