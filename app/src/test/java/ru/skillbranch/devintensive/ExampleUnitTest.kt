@@ -5,6 +5,7 @@ import org.junit.Test
 import org.junit.Assert.*
 import ru.skillbranch.devintensive.extensions.*
 import ru.skillbranch.devintensive.models.*
+import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.utils.Utils.toInitials
 import ru.skillbranch.devintensive.utils.Utils.transliteration
 import java.util.*
@@ -95,6 +96,34 @@ class ExampleUnitTest {
     fun test_toInitials() {
         val initials = toInitials(null, null)
         println("Initials: \"$initials\"")
+    }
+
+    @Test
+    fun parseFullNameTest(){
+        /* skillBranch tests */
+        assertEquals(null to null, Utils.parseFullName(null))
+        assertEquals(null to null, Utils.parseFullName(""))
+        assertEquals(null to null, Utils.parseFullName(" "))
+        assertEquals("John" to null, Utils.parseFullName("John"))
+        /* additional tests */
+        assertEquals(null to null, Utils.parseFullName("     "))
+        assertEquals("null" to null, Utils.parseFullName("null"))
+        assertEquals("John" to null, Utils.parseFullName("John      "))
+        assertEquals("John" to null, Utils.parseFullName(" John     "))
+    }
+
+    @Test
+    fun parseFullNameTest2(){
+        /* skillBranch tests */
+        println("null to null ${Utils.parseFullName(null)}")
+        println("null to null ${Utils.parseFullName("")}")
+        println("null to null ${Utils.parseFullName(" ")}")
+        println("John to null ${Utils.parseFullName("John")}")
+        /* additional tests */
+        println("null to null ${Utils.parseFullName("     ")}")
+        println("null to null ${Utils.parseFullName("null")}")
+        println("John to null ${Utils.parseFullName("John      ")}")
+        println("John to null ${Utils.parseFullName(" John     ")}")
     }
 
     @Test
