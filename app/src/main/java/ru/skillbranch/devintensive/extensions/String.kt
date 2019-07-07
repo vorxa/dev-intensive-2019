@@ -10,3 +10,15 @@ fun String.truncate(payload: Int = 16): String {
     }
 
 }
+
+fun String.stripHtml(): String {
+    //println("input=$this")
+    val regex = """<.*?>""".toRegex()
+    val amps = """&(\w|#)+?;""".toRegex()
+    val spaces = """ +""".toRegex()
+    var str = regex.replace(this, "")
+    str = amps.replace(str, "")
+    str = spaces.replace(str, " ")
+    //println("output=$str")
+    return str
+}
