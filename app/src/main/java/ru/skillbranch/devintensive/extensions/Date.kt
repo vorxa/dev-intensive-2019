@@ -127,25 +127,25 @@ enum class TimeUnits {
     SECOND,
     MINUTE,
     HOUR,
-    DAY
-}
+    DAY;
 
-fun TimeUnits.plural(value: Int): String {
-    var endings = emptyList<String>()
-    when (this){
-        TimeUnits.SECOND -> {endings = listOf("секунду", "секунд", "секунды")}
-        TimeUnits.MINUTE -> {endings = listOf("минуту", "минут", "минуты")}
-        TimeUnits.HOUR -> {endings = listOf("час", "часов", "часа")}
-        TimeUnits.DAY -> {endings = listOf("день", "дней", "дня")}
-    }
+    fun plural(value: Int): String {
+        var endings = emptyList<String>()
+        when (this){
+            SECOND -> {endings = listOf("секунду", "секунд", "секунды")}
+            MINUTE -> {endings = listOf("минуту", "минут", "минуты")}
+            HOUR -> {endings = listOf("час", "часов", "часа")}
+            DAY -> {endings = listOf("день", "дней", "дня")}
+        }
 
-    val decs = if (value < 100) value else "$value".substring("$value".length-2,"$value".length).toInt()
-    val ending = when {
-        decs in 5..19 || (decs % 10)  in 5..9 || (decs % 10) == 0 -> endings[1]
-        (decs % 10)  in 2..4 -> endings[2]
-        decs == 1 || (decs % 10) == 1 -> endings[0]
-        else -> ""
-    }
+        val decs = if (value < 100) value else "$value".substring("$value".length-2,"$value".length).toInt()
+        val ending = when {
+            decs in 5..19 || (decs % 10)  in 5..9 || (decs % 10) == 0 -> endings[1]
+            (decs % 10)  in 2..4 -> endings[2]
+            decs == 1 || (decs % 10) == 1 -> endings[0]
+            else -> ""
+        }
 
-    return "$value $ending"
-}
+        return "$value $ending"
+    }}
+
