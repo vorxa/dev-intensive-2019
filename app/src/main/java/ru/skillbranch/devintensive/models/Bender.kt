@@ -53,7 +53,7 @@ class Bender(var status:Status = Status.NORMAL, var question:Question = Question
         SERIAL("Мой серийный номер?", listOf("2716057")) {
             override fun nextQuestion(): Question = IDLE
         },
-        IDLE("На этом всё, вопросов больше нет.", listOf()) {
+        IDLE("На этом все, вопросов больше нет", listOf()) {
             override fun nextQuestion(): Question = IDLE
         };
 
