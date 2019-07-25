@@ -15,10 +15,10 @@ class Bender(var status:Status = Status.NORMAL, var question:Question = Question
 
         return if (question.answers.contains(answer)) {
             question = question.nextQuestion()
-            "Отлично - это правильный ответ\n${question.question}" to status.color
+            "Отлично - ты справился\n${question.question}" to status.color
         } else {
             status = status.nextStatus()
-            "Это не правильный ответ\n${question.question}" to status.color
+            "Это неправильный ответ\n${question.question}" to status.color
         }
     }
 
